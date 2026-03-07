@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Verkiezingswinnaar.nl</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
   <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
@@ -21,13 +22,13 @@
   <canvas id="chart"></canvas>
 </div>
 
+<div class="live-indicator">
+  <span class="live-dot"></span>
+  <span id="live-text">Live - Last updated: --:--</span>
+  <button id="refresh-btn">↻</button>
+</div>
 
-
-
-
-
-
-<script type="module" src="initialize.js"></script>
+<script type="module" src="main.js"></script>
 
 </body>
 </html>

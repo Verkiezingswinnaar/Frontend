@@ -92,12 +92,19 @@ function processData(chart, snapshots) {
         }
 
         // Change the end of the x-axis to the whole hour after the end of the most recent snapshot.
+        // And the start of the x-axis to the closest 5 minutes before the first snapshot.
         const lastSnapshot = snapshots.at(-1)
         const msToHour = 3600 * 1000
+
         chart.options.scales.x.max = Math.ceil(lastSnapshot.timestamp / msToHour) * msToHour;
+
+        const firstSnapshot = snapshots.at(0)
+        const msTo5Min = 300 * 1000
+        chart.options.scales.x.suggestedMin = Math.floor(firstSnapshot.timestamp / msTo5Min) * msTo5Min;
 
         chart.update('none');
 
+        updateLiveTimestamp()
 
     } catch (err) {
         console.error("Data fetch failed:", err);
@@ -122,3 +129,22 @@ async function fetchGzipJSONL(url) {
     return data;
 }
 
+function updateLiveTimestamp() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
+    document.getElementById("live-text").textContent =
+        "Live - Last updated: " + timeString;
+}
+
+const refreshBtn = document.getElementById("refresh-btn");
+
+refreshBtn.addEventListener("click", async () => {
+    refreshBtn.disabled = true;
+    updateLiveTimestamp();
+    console.log("As you expected, this button isn't actually doing anything. Please send any blame to my friend who suggested to add such a button")
+    setTimeout(() => refreshBtn.disabled = false, 2000);
+});
