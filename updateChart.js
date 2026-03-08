@@ -137,7 +137,7 @@ function updateLiveTimestamp() {
     });
 
     document.getElementById("live-text").textContent =
-        "Live - Last updated: " + timeString;
+        "Live - Laatste update: " + timeString;
 }
 
 const refreshBtn = document.getElementById("refresh-btn");
