@@ -12,12 +12,12 @@ const partyColors = {
     PVDD: "#006400",       // Dark Green
     CU: "#00AEEF",         // Light Blue
     SGP: "#FF7F00",        // Orange
-    DENK: "#00B140",       // Green
+    DENK: "#0CA678",       // Green
     JA21: "#1F2A44",       // Dark Blue
     BBB: "#92C83E",        // Farmer Green
     VOLT: "#5A2D82",       // Purple
     BIJ1: "#000000",       // Black
-    GLPVDA: "#8E1C3A",
+    GLPVDA: "#D9480F",
     "50PLUS": "#800080"
 };
 
