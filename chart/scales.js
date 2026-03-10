@@ -12,7 +12,8 @@ export function getScales() {
                 unit: "minute",
                 displayFormats: {
                     minute: "HH:mm"
-                }
+                },
+                tooltipFormat: 'dd MMM yyyy, HH:mm', // fallback format
             },
             ticks: {
                 autoSkip: true,

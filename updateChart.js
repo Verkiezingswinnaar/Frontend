@@ -72,10 +72,12 @@ function processData(chart, snapshots) {
                 : "relative_vote_change";
 
             const data = snapshots.map(snapshot => {
-                const party = snapshot.party_snapshots[partyName];
+                const party_snapshot = snapshot.party_snapshots[partyName];
                 return {
                     x: snapshot.timestamp,
-                    y: party?.[y_axis_key] ?? null
+                    y: party_snapshot?.[y_axis_key] ?? null,
+                    votesThisElection: party_snapshot?.["votes_this_election"] ?? null,
+                    votesLastElection: party_snapshot?.["votes_last_election"] ?? null
                 };
             });
 
