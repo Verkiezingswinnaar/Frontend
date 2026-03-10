@@ -75,7 +75,7 @@ function processData(chart, snapshots) {
                 const party = snapshot.party_snapshots[partyName];
                 return {
                     x: snapshot.timestamp,
-                    y: party[y_axis_key]
+                    y: party?.[y_axis_key] ?? null
                 };
             });
 
