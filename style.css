@@ -42,3 +42,106 @@
         transform: scale(1);
     }
 }
+
+/*I should probably move everything below here to one or two separate files*/
+
+.grafiek-uitleg p {
+    margin: 3px;
+}
+.grafiek-uitleg h2 {
+    margin: 5px;
+}
+
+.vragen p {
+    margin: 3px;
+}
+.vragen h2 {
+    margin: 5px;
+}
+
+
+/* Box styling */
+.grafiek-uitleg-box {
+    background-color: #f9f9f9;  /* subtiele lichtgrijze achtergrond */
+    border-left: 4px solid #007acc; /* accentkleur */
+    padding: 12px 16px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.35;
+    /*max-width: 900px; !* optioneel voor breedte *!*/
+    border-radius: 4px;
+}
+
+/* Header styling met icoon */
+.grafiek-uitleg-box h2 {
+    margin: 0 0 6px 0; /* geen topmarge, kleine ruimte onder */
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center; /* icoon verticaal uitlijnen */
+    gap: 6px; /* ruimte tussen icoon en tekst */
+}
+
+/* Paragraaf styling */
+.grafiek-uitleg-box p {
+    margin: 0 0 3px 0; /* compacte regelafstand */
+}
+
+/* Link styling */
+.grafiek-uitleg-box a {
+    color: #007acc;
+    text-decoration: none;
+}
+
+.grafiek-uitleg-box a:hover {
+    text-decoration: underline;
+}
+
+/* Optioneel: icoon iets groter */
+.grafiek-uitleg-box .icon {
+    font-size: 18px;
+}
+
+
+/* Box styling */
+.vragen-box {
+    background-color: #f9f9f9;        /* subtiele lichtgrijze achtergrond */
+    border-left: 4px solid #007acc;   /* accentkleur */
+    padding: 12px 16px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.35;
+    /*max-width: 900px;*/
+    border-radius: 4px;
+    margin-top: 16px;                 /* ruimte boven deze box */
+}
+
+/* Header styling met icoon */
+.vragen-box h2 {
+    margin: 0 0 6px 0;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;              /* icoon verticaal uitlijnen */
+    gap: 6px;
+}
+
+/* Paragraaf styling */
+.vragen-box p {
+    margin: 0 0 3px 0;               /* compacte regelafstand */
+}
+
+/* Link styling */
+.vragen-box a {
+    color: #007acc;
+    text-decoration: none;
+}
+
+.vragen-box a:hover {
+    text-decoration: underline;
+}
+
+/* Icoon styling */
+.vragen-box .icon {
+    font-size: 18px;
+}

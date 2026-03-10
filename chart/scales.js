@@ -31,6 +31,11 @@ export function getScales() {
                     weight: "bold",
                     lineHeight: 1.2
                 }
+            },
+            ticks: {
+                callback: function(value) {
+                    return value + '%';
+                }
             }
         }
     };

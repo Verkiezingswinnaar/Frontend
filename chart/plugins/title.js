@@ -4,6 +4,6 @@ export function getTitle() {
     return {
         display: true,
         text: constants.TITLE_TEXT,
-        font: { size: 18 }
+        font: { size: 22 }
     };
 }
