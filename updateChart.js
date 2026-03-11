@@ -21,6 +21,8 @@ const partyColors = {
     "50PLUS": "#800080"
 };
 
+let globalUnchangedXMax = 0
+
 /**
  * @param {Chart} chart -
  */
@@ -94,15 +96,23 @@ function processData(chart, snapshots) {
         }
 
         // Change the end of the x-axis to the whole hour after the end of the most recent snapshot.
-        // And the start of the x-axis to the closest 5 minutes before the first snapshot.
+        // And the start of the x-axis 1.5 hours before that.
         const lastSnapshot = snapshots.at(-1)
         const msToHour = 3600 * 1000
 
-        chart.options.scales.x.max = Math.ceil(lastSnapshot.timestamp / msToHour) * msToHour;
+        let currentXMin = chart.options.scales.x.min
+        let currentXMax = chart.options.scales.x.max
 
-        const firstSnapshot = snapshots.at(0)
-        const msTo5Min = 300 * 1000
-        chart.options.scales.x.suggestedMin = Math.floor(firstSnapshot.timestamp / msTo5Min) * msTo5Min;
+        // If the user hasn't changed the x-axis from it's default,
+        // automatically add more whitespace when new data comes in.
+        if (currentXMin === undefined || globalUnchangedXMax === currentXMax) {
+            currentXMax = Math.ceil(lastSnapshot.timestamp / msToHour) * msToHour;
+            currentXMin = currentXMax - 1.5 * msToHour
+            globalUnchangedXMax = currentXMax
+        }
+
+        chart.options.scales.x.min = currentXMin
+        chart.options.scales.x.max = currentXMax
 
         chart.update('none');
 

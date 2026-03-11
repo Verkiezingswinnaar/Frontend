@@ -87,3 +87,11 @@
     font-size: 18px;
     line-height: 1;             /* prevents extra space in Firefox */
 }
+
+canvas {
+    cursor: grab;
+}
+
+canvas:active {
+    cursor: grabbing;
+}

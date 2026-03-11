@@ -21,7 +21,22 @@ export function createChart(ctx) {
             plugins: {
                 legend: getLegend(),
                 title: getTitle(),
-                tooltip: getTooltip()
+                tooltip: getTooltip(),
+                zoom: {
+                    pan: {
+                        enabled: true,
+                        mode: 'x'
+                    },
+                    zoom: {
+                        wheel: {
+                            enabled: true
+                        },
+                        pinch: {
+                            enabled: true
+                        },
+                        mode: 'x'
+                    }
+                }
             },
 
             scales: getScales()
