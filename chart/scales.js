@@ -15,10 +15,19 @@ export function getScales() {
                 },
                 tooltipFormat: 'dd MMM yyyy, HH:mm', // fallback format
             },
-            ticks: {
-                autoSkip: true,
-                stepSize: 5
-            }
+            afterBuildTicks: scale => {
+                const ticks = [];
+                const fiveMinutesInMs = 5 * 60 * 1000
+
+                const start = Math.ceil(scale.min / fiveMinutesInMs) * fiveMinutesInMs ;
+                const end = scale.max;
+
+                for (let t = start; t <= end; t += fiveMinutesInMs) {
+                    ticks.push({ value: t });
+                }
+
+                scale.ticks = ticks;
+            },
         },
 
         y: {
