@@ -75,6 +75,7 @@ function processData(chart, snapshots) {
 
             const data = snapshots.map(snapshot => {
                 const party_snapshot = snapshot.party_snapshots[partyName];
+
                 return {
                     x: snapshot.timestamp,
                     y: party_snapshot?.[y_axis_key] ?? null,
@@ -87,10 +88,21 @@ function processData(chart, snapshots) {
                 label: partyName,
                 data: data,
                 borderWidth: borderWidth,
-                tension: 0.2,
+                tension: 0,
                 borderColor: partyColors[partyName],
                 backgroundColor: partyColors[partyName],
-                hidden: isHidden // Hide a party again if the party was hidden by the user.
+                hidden: isHidden, // Hide a party again if the party was hidden by the user.
+                pointRadius: data.map((value, index, arr) => {
+                    // Hide a point if its value is identical to the previous AND the next point
+                    if (index > 0
+                        && arr[index - 1]
+                        && arr[index + 1]
+                        && value.y === arr[index - 1].y
+                        && value.y === arr[index + 1].y) {
+                        return 0;
+                    }
+                    return 3;
+                })
             };
             datasetIndex++
         }

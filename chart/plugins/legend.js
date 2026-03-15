@@ -11,7 +11,7 @@ export function getLegend() {
                 dataset.borderWidth =
                     index === legendItem.datasetIndex
                         ? HIGHLIGHT_WIDTH
-                        : DIM_WIDTH;
+                        : DEFAULT_WIDTH; // Changed to DEFAULT_WIDTH, lowering the thickness makes the graph too jittery.
             });
 
             chart.update();
