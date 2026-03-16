@@ -1,4 +1,3 @@
-
 import * as constants from "../constants.js";
 
 const partyColors = {
@@ -54,7 +53,7 @@ function processData(chart, snapshots) {
         }
 
         // Get all parties that have reached the threshold
-        const partyNames = Object.keys(hasReachedThreshold).filter(key => hasReachedThreshold[key]).sort();
+        const partyNames = Object.keys(hasReachedThreshold).filter(partyName => hasReachedThreshold[partyName]).sort();
 
         // Check whether a party was marked as 'hidden' by the user before the update
         const isVisible = {};
@@ -73,16 +72,25 @@ function processData(chart, snapshots) {
                 ? "votes_percentage"
                 : "relative_vote_change";
 
-            const data = snapshots.map(snapshot => {
-                const party_snapshot = snapshot.party_snapshots[partyName];
+            const data = snapshots
+                // Filter out parties that didn't participate in both elections.
+                // This is relevant when replaying national elections in a municipal election setting
+                .filter(snapshot => snapshot.party_snapshots[partyName]?.[y_axis_key] > -100)
+                .map(snapshot => {
+                    const party_snapshot = snapshot.party_snapshots[partyName];
 
-                return {
-                    x: snapshot.timestamp,
-                    y: party_snapshot?.[y_axis_key] ?? null,
-                    votesThisElection: party_snapshot?.["votes_this_election"] ?? null,
-                    votesLastElection: party_snapshot?.["votes_last_election"] ?? null
-                };
-            });
+                    return {
+                        x: snapshot.timestamp,
+                        y: party_snapshot?.[y_axis_key] ?? null,
+                        votesThisElection: party_snapshot?.["votes_this_election"] ?? null,
+                        votesLastElection: party_snapshot?.["votes_last_election"] ?? null
+                    };
+                });
+            // Skip this party if there are no results to report for this party due to the above filter.
+            if (data.length === 0) {
+                continue
+            }
+
 
             chartData.datasets[datasetIndex] = {
                 label: partyName,
