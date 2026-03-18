@@ -1,4 +1,5 @@
 import * as constants from "../constants.js";
+import {applyXRange, applyGlobalYRange} from "./axisUpdate.js";
 
 const partyColors = {
     LOKAAL: "#1ABC9C",
@@ -19,8 +20,6 @@ const partyColors = {
     GLPVDA: "#D9480F",
     "50PLUS": "#800080"
 };
-
-let globalUnchangedXMax = 0
 
 /**
  * @param {Chart} chart -
@@ -55,18 +54,20 @@ function processData(chart, snapshots) {
         // Get all parties that have reached the threshold
         const partyNames = Object.keys(hasReachedThreshold).filter(partyName => hasReachedThreshold[partyName]).sort();
 
-        // Check whether a party was marked as 'hidden' by the user before the update
+        // Save properties that need to be restored after the dataset is reconstructed
         const isVisible = {};
+        const borderWidths = {};
         chartData.datasets.forEach((dataset, index) => {
             isVisible[dataset.label] = chart.isDatasetVisible(index);
+            borderWidths[dataset.label] = dataset.borderWidth;
         });
 
+        // Delete the old datasets to ensure that wiping and restoring the JSONL is supported.
+        chartData.datasets = []
         let datasetIndex = 0
         for (const partyName of partyNames) {
-            const existingDataset = chartData.datasets[datasetIndex];
-
             const isHidden = isVisible[partyName] === false;
-            const borderWidth = existingDataset?.borderWidth ?? 2;
+            const borderWidth = borderWidths[partyName] ?? 2;
 
             const y_axis_key = constants.IS_NATIONAL_ELECTION
                 ? "votes_percentage"
@@ -91,7 +92,6 @@ function processData(chart, snapshots) {
                 continue
             }
 
-
             chartData.datasets[datasetIndex] = {
                 label: partyName,
                 data: data,
@@ -115,24 +115,9 @@ function processData(chart, snapshots) {
             datasetIndex++
         }
 
-        // Change the end of the x-axis to the whole hour after the end of the most recent snapshot.
-        // And the start of the x-axis 1.5 hours before that.
-        const lastSnapshot = snapshots.at(-1)
-        const msToHour = 3600 * 1000
-
-        let currentXMin = chart.options.scales.x.min
-        let currentXMax = chart.options.scales.x.max
-
-        // If the user hasn't changed the x-axis from it's default,
-        // automatically add more whitespace when new data comes in.
-        if (currentXMin === undefined || globalUnchangedXMax === currentXMax) {
-            currentXMax = Math.ceil(lastSnapshot.timestamp / msToHour) * msToHour;
-            currentXMin = currentXMax - 1.5 * msToHour
-            globalUnchangedXMax = currentXMax
-        }
-
-        chart.options.scales.x.min = currentXMin
-        chart.options.scales.x.max = currentXMax
+        const timestampLastSnapshot = snapshots.at(-1)?.timestamp ?? 0
+        applyXRange(chart, timestampLastSnapshot)
+        applyGlobalYRange(chart)
 
         chart.update('none');
 

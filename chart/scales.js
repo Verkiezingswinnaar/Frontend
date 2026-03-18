@@ -20,15 +20,16 @@ export function getScales() {
 
                 const scaleDuration = scale.max - scale.min
                 const minutesToMs = 60 * 1000;
+                const hoursToMs = 60 * 60 * 1000
 
                 let stepsize = 5 * minutesToMs
-                if (scaleDuration > 2 * 60 * 60 * 1000) {
+                if (scaleDuration > 2 * hoursToMs) {
                     stepsize = 15 * minutesToMs
                 }
-                if (scaleDuration > 4 * 60 * 60 * 1000) {
+                if (scaleDuration > 4 * hoursToMs) {
                     stepsize = 30 * minutesToMs
                 }
-                if (scaleDuration > 8 * 60 * 60 * 1000) {
+                if (scaleDuration > 8 * hoursToMs) {
                     stepsize = 60 * minutesToMs
                 }
                 const start = Math.ceil(scale.min / stepsize) * stepsize;

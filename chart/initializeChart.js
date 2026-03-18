@@ -5,8 +5,6 @@ import { getScales } from "./scales.js";
 import { getTooltip } from "./plugins/tooltip.js";
 import { getZoom } from "./plugins/zoom.js";
 
-
-
 export function createChart(ctx) {
     return new Chart(ctx, {
         type: "line",

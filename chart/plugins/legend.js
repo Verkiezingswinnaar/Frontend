@@ -1,3 +1,5 @@
+import {applyGlobalYRange} from "../axisUpdate.js";
+
 export function getLegend() {
     const DEFAULT_WIDTH = 2;
     const HIGHLIGHT_WIDTH = 5;
@@ -13,6 +15,17 @@ export function getLegend() {
                         ? HIGHLIGHT_WIDTH
                         : DEFAULT_WIDTH; // Changed to DEFAULT_WIDTH, lowering the thickness makes the graph too jittery.
             });
+
+            chart.update();
+        },
+        onClick: function (e, legendItem, legend) {
+            const chart = legend.chart;
+            const datasetIndex = legendItem.datasetIndex;
+            const dataset = chart.data.datasets[datasetIndex];
+
+            dataset.hidden = !dataset.hidden;
+            // Recompute Y-axis min/max based on visible datasets
+            applyGlobalYRange(chart)
 
             chart.update();
         },
