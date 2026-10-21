@@ -1,0 +1,39 @@
+name: Bug report
+description: Report incorrect behavior or a display problem.
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe what you saw and how to reproduce it.
+  - type: input
+    id: page_or_election
+    attributes:
+      label: Page or election
+      description: Page, election ID, party, or browser involved, if relevant.
+      placeholder: e.g. Tweede Kamer, TK2025
+    validations:
+      required: false
+  - type: textarea
+    id: observed
+    attributes:
+      label: What happened?
+      description: Include the steps and result you observed.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Done when
+      description: List the observable conditions that will confirm the fix.
+      placeholder: |
+        - [ ] ...
+    validations:
+      required: true

@@ -1,0 +1,32 @@
+name: Feature request
+description: Propose a focused improvement to the election dashboard.
+title: "[Feature] "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Focus on the user outcome and describe how someone will know the change is complete.
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What should a visitor be able to understand or do after this change?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context and constraints
+      description: Relevant election type, data fields, design constraints, or related issues.
+    validations:
+      required: false
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Done when
+      description: List observable outcomes that can be reviewed.
+      placeholder: |
+        - [ ] ...
+    validations:
+      required: true
